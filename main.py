@@ -2,7 +2,7 @@ import requests
 import os
 from itertools import count
 from terminaltables import AsciiTable
-
+from dotenv import load_dotenv
 
 def predicted_rub_salary_sj(salary):
     if salary["payment_from"] and salary["payment_to"]:
@@ -111,9 +111,10 @@ def get_table(vacansies, title):
 
 
 def main():
+    load_dotenv()
     secret_key = os.environ["SUPERJOB_API_KEY"]
-    print(table(get_vacansy_sj(secret_key), "SJ Moscow"))
-    print(table(get_vacansy_hh(), "HH Moscow"))
+    print(get_table(get_vacansy_sj(secret_key), "SJ Moscow"))
+    print(get_table(get_vacansy_hh(), "HH Moscow"))
 
 
 if __name__ == "__main__":
