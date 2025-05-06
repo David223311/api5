@@ -4,7 +4,7 @@ from itertools import count
 from terminaltables import AsciiTable
 
 
-def predict_rub_salary_sj(salary):
+def predicted_rub_salary_sj(salary):
     if salary["payment_from"] and salary["payment_to"]:
         average_salary = int((salary["payment_from"] + salary["payment_to"]) / 2)
     elif salary["payment_from"]:
@@ -74,7 +74,7 @@ def get_vacansy_sj(secret_key):
             if not vacansies["objects"]:
                 break
             for vacansy in vacansies["objects"]:
-                predict_rub_salary = predict_rub_salary_sj(vacansy)
+                predict_rub_salary = predicted_rub_salary_sj(vacansy)
                 if predict_rub_salary:
                     all_salary.append(predict_rub_salary)
         average_salary = None
@@ -88,7 +88,7 @@ def get_vacansy_sj(secret_key):
     return vacansies_by_language
 
 
-def table(vacansies, title):
+def get_table(vacansies, title):
     table_data = [
         [
             "Язык программирования ",
