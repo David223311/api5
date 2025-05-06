@@ -39,10 +39,11 @@ def get_vacansy_hh():
             params = {"text": prorgamm_lang, "area": 1, "period": 30, "page": page}
             response = requests.get(url, params=params)
             response.raise_for_status()
-            if page >= response.json()["pages"] - 1:
+            vacansies = response.json()
+            if page >= vacansies["pages"] - 1:
                 break
-            found_vacancy = response.json()["found"]
-            for vacansy in response.json()["items"]:
+            found_vacancy = vacansies["found"]
+            for vacansy in vacansies["items"]:
                 vacansy_predicte = predict_rub_salary_hh(vacansy["salary"])
                 if vacansy_predicte:
                     all_salaries.append(vacansy_predicte)
@@ -67,11 +68,13 @@ def get_vacansy_sj(secret_key):
             headers = {"X-Api-App-Id": secret_key}
             params = {"town": "Moscow", "keyword": prorgamm_lang, "page": page}
             response = requests.get(url, params=params, headers=headers)
-            found_vacancy = response.json()["total"]
-            if not response.json()["objects"]:
+            response.raise_for_status()
+            vacansies = response.json()
+            found_vacancy = vacansies["total"]
+            if not vacansies["objects"]:
                 break
-            for profession in response.json()["objects"]:
-                predict_rub_salary = predict_rub_salary_sj(profession)
+            for vacansy in vacansies["objects"]:
+                predict_rub_salary = predict_rub_salary_sj(vacansy)
                 if predict_rub_salary:
                     all_salary.append(predict_rub_salary)
         average_salary = None
