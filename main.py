@@ -31,9 +31,9 @@ def predict_rub_salary_hh(salary):
 
 def get_vacansy_hh():
     prorgamm_langs = ["python", "Java", "PHP"]
-    vacansy_by_language = {}
+    vacansies_by_language = {}
     for prorgamm_lang in prorgamm_langs:
-        all_salary = []
+        all_salaries = []
         for page in count(0):
             url = "https://api.hh.ru/vacancies/"
             params = {"text": prorgamm_lang, "area": 1, "period": 30, "page": page}
@@ -45,21 +45,21 @@ def get_vacansy_hh():
             for vacansy in response.json()["items"]:
                 vacansy_predicte = predict_rub_salary_hh(vacansy["salary"])
                 if vacansy_predicte:
-                    all_salary.append(vacansy_predicte)
+                    all_salaries.append(vacansy_predicte)
         average_salary = None
-        if all_salary:
-            average_salary = int(sum(all_salary) / len(all_salary))
-        vacansy_by_language[prorgamm_lang] = {
+        if all_salaries:
+            average_salary = int(sum(all_salaries) / len(all_salaries))
+        vacansies_by_language[prorgamm_lang] = {
             "vacancies_found": found_vacancy,
-            "vacancies_processed": len(all_salary),
+            "vacancies_processed": len(all_salaries),
             "average_salary": average_salary,
         }
-    return vacansy_by_language
+    return vacansies_by_language
 
 
 def get_vacansy_sj(secret_key):
     prorgamm_langs = ["python", "Java", "PHP"]
-    vacansy_by_language = {}
+    vacansies_by_language = {}
     for prorgamm_lang in prorgamm_langs:
         all_salary = []
         for page in count(0, 1):
@@ -77,12 +77,12 @@ def get_vacansy_sj(secret_key):
         average_salary = None
         if all_salary:
             average_salary = int(sum(all_salary) / len(all_salary))
-        vacansy_by_language[prorgamm_lang] = {
+        vacansies_by_language[prorgamm_lang] = {
             "vacancies_found": found_vacancy,
             "vacancies_processed": len(all_salary),
             "average_salary": average_salary,
         }
-    return vacansy_by_language
+    return vacansies_by_language
 
 
 def table(vacansies, title):
