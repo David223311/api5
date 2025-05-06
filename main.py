@@ -44,9 +44,9 @@ def get_vacansy_hh():
                 break
             found_vacancy = vacansies["found"]
             for vacansy in vacansies["items"]:
-                vacansy_predicte = predict_rub_salary_hh(vacansy["salary"])
-                if vacansy_predicte:
-                    all_salaries.append(vacansy_predicte)
+                vacansy_predicted = predict_rub_salary_hh(vacansy["salary"])
+                if vacansy_predicted:
+                    all_salaries.append(vacansy_predicted)
         average_salary = None
         if all_salaries:
             average_salary = int(sum(all_salaries) / len(all_salaries))
